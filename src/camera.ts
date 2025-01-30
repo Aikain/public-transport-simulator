@@ -11,8 +11,8 @@ class Camera {
 
     private mouseDown = false;
     private ctrlDown = false;
-    private azimuth = 0; // deg
-    private elevation = 45; // deg
+    private azimuth = 35; // deg
+    private elevation = 25; // deg
 
     private lookX = 0;
     private lookY = 0;
