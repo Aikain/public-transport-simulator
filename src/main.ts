@@ -1,24 +1,17 @@
 import './style.css';
-import { BoxGeometry, Mesh, MeshLambertMaterial, Scene, WebGLRenderer } from 'three';
+import { Scene, WebGLRenderer } from 'three';
 import Camera from './camera.ts';
-import World from './world.ts';
+import Game from './game.ts';
 
 const scene = new Scene();
-new World(scene);
-
 const camera = new Camera();
+const game = new Game(scene);
 
 const renderer = new WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-const geometry = new BoxGeometry(1, 1, 1);
-const material = new MeshLambertMaterial({ color: 0xff0000 });
-
-const cube = new Mesh(geometry, material);
-cube.position.set(0, 0, 0);
-scene.add(cube);
-
 const animate = () => {
+    game.update();
     renderer.render(scene, camera.camera);
 };
 

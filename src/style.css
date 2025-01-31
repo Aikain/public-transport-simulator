@@ -1,3 +1,14 @@
 body {
     margin: 0;
 }
+
+#clock {
+    position: absolute;
+    top: 1rem;
+    width: 100%;
+    z-index: 100;
+
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}

@@ -1,11 +1,33 @@
-import { Color, DirectionalLight, HemisphereLight, Mesh, MeshLambertMaterial, PlaneGeometry, Scene } from 'three';
+import {
+    BoxGeometry,
+    Color,
+    DirectionalLight,
+    HemisphereLight,
+    Mesh,
+    MeshLambertMaterial,
+    PlaneGeometry,
+    Scene,
+} from 'three';
 
 class World {
+    private cube;
+
     constructor(scene: Scene) {
         scene.background = new Color().setHex(0x87ceeb);
 
         scene.add(...this.setupLights());
         scene.add(this.setupGround());
+
+        const geometry = new BoxGeometry(1, 1, 1);
+        const material = new MeshLambertMaterial({ color: 0xff0000 });
+
+        const cube = new Mesh(geometry, material);
+        cube.position.set(0, 0, 0);
+        scene.add(cube);
+
+        this.cube = new Mesh(geometry, material);
+        this.cube.position.set(2, 0, 0);
+        scene.add(this.cube);
     }
 
     private setupGround = () => {
@@ -27,6 +49,34 @@ class World {
 
         return [hemisphereLight, directionalLight];
     };
+
+    update(delta: number) {
+        if (this.cube.position.x >= 2) {
+            if (this.cube.position.z >= 2) {
+                this.cube.position.x -= delta / 1000;
+            } else {
+                this.cube.position.z += delta / 1000;
+            }
+        } else if (this.cube.position.x <= -2) {
+            if (this.cube.position.z <= -2) {
+                this.cube.position.x += delta / 1000;
+            } else {
+                this.cube.position.z -= delta / 1000;
+            }
+        } else if (this.cube.position.z >= 2) {
+            if (this.cube.position.x <= -2) {
+                this.cube.position.z -= delta / 1000;
+            } else {
+                this.cube.position.x -= delta / 1000;
+            }
+        } else {
+            if (this.cube.position.x >= 2) {
+                this.cube.position.z += delta / 1000;
+            } else {
+                this.cube.position.x += delta / 1000;
+            }
+        }
+    }
 }
 
 export default World;
